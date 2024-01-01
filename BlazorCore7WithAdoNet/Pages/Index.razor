@@ -1,0 +1,73 @@
+﻿@page "/"
+@using BlazorCore7WithAdoNet.Services;
+@using LayerDAL.Entities;
+
+@inject IEmployeeServices EmployeeServices
+
+<PageTitle>Show Employees</PageTitle>
+
+<h1>Employees</h1>
+
+<table class="table table-primary table-striped">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+
+            <th>
+                First Name
+            </th>
+
+            <th>
+                Last Name
+            </th>
+
+            <th>
+                Email
+            </th>
+
+
+            <th>
+                Address
+            </th>
+
+            <th>
+                Phone
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ListEmployees)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td>@item.Address</td>
+                <td>@item.Phone</td>
+                <td>
+                    <button class="btn-info" type="submit">Edit</button>
+                    <button class="btn-primary" type="submit">Details</button>
+                    <button class="btn-danger" type="submit">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    List<Employee> ListEmployees = new List<Employee>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListEmployees = await EmployeeServices.ShowEmployees();
+
+
+    }
+
+}
